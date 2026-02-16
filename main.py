@@ -2,56 +2,58 @@ import pygame
 from snake import Snake
 from apple import Apple
 
-pygame.init()
-
-clock = pygame.time.Clock()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Snake test")
-running = True
-
-
 class Game:
-    def __init__(self, screen):
-        self.screen = screen
-        
+    def __init__(self):
+        self.clock = pygame.time.Clock()
 
-game_instance = Game(screen)
-my_snake = Snake(game_instance)
-apple = Apple(game_instance)
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w and my_snake.direction_y != 20:
-                my_snake.direction_y = -20
-                my_snake.direction_x = 0
+        self.screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Snake test")
 
-            if event.key == pygame.K_s and my_snake.direction_y != -20:
-                my_snake.direction_y = 20
-                my_snake.direction_x = 0
+        self.my_snake = Snake(self)
+        self.apple = Apple(self)
+        self.running = True
 
-            if event.key == pygame.K_d and my_snake.direction_x != -20:
-                my_snake.direction_x = 20
-                my_snake.direction_y = 0
+    def update(self):
+        self.my_snake.update()
 
-            if event.key == pygame.K_a and my_snake.direction_x != 20:
-                my_snake.direction_x = -20
-                my_snake.direction_y = 0
-    
-    if my_snake.body[0].left < 0 or my_snake.body[0].right > 800 or my_snake.body[0].top < 0 or my_snake.body[0].bottom > 600:
-        running = False
+    def check_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w and self.my_snake.direction_y != 20:
+                    self.my_snake.direction_y = -20
+                    self.my_snake.direction_x = 0
 
+                if event.key == pygame.K_s and self.my_snake.direction_y != -20:
+                    self.my_snake.direction_y = 20
+                    self.my_snake.direction_x = 0
 
-    my_snake.update()
+                if event.key == pygame.K_d and self.my_snake.direction_x != -20:
+                    self.my_snake.direction_x = 20
+                    self.my_snake.direction_y = 0
 
-    screen.fill((0, 0, 0))
-    my_snake.draw()
-    apple.draw()
+                if event.key == pygame.K_a and self.my_snake.direction_x != 20:
+                    self.my_snake.direction_x = -20
+                    self.my_snake.direction_y = 0
+    def main(self):
+        pygame.init()
+        while self.running:
+            if self.my_snake.body[0].left < 0 or self.my_snake.body[0].right > 800 or self.my_snake.body[0].top < 0 or self.my_snake.body[0].bottom > 600:
+                self.running = False
 
-    pygame.display.flip()
-    clock.tick(15)
-    
+            self.check_events()
+            self.update()
 
-pygame.quit()
+            self.screen.fill((0, 0, 0))
+            self.my_snake.draw()
+            self.apple.draw()
+
+            pygame.display.flip()
+            self.clock.tick(15)
+        pygame.quit()
+
+if __name__ == "__main__":
+    game = Game()
+    game.main()

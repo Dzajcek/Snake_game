@@ -2,6 +2,6 @@
 
 Simple Popular game: snake
 
-Version: beta
+Version: 1.0
 
 Made in Python with Pygame

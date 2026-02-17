@@ -9,14 +9,16 @@ class Snake:
         self.direction_x = 0
         self.direction_y = 0
 
-    def update(self):
+
+    def update(self, food_eaten=False):
         new_head = self.body[0].copy()
         new_head.x += self.direction_x
         new_head.y += self.direction_y
         
         if self.direction_x != 0 or self.direction_y != 0:
             self.body.insert(0, new_head)
-            self.body.pop()
+            if not food_eaten:
+                self.body.pop()
 
     def draw(self):
         for segment in self.body:

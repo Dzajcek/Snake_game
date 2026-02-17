@@ -8,7 +8,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption("Snake test")
+        pygame.display.set_caption("Snake 1.0")
 
         self.my_snake = Snake(self)
         self.apple = Apple(self)
